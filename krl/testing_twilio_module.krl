@@ -7,10 +7,16 @@ ruleset using_twilio_module{
     use module twilio_module alias twilio
 
   
-    shares testing_twilio_module, __testing, test
+    shares testing_twilio_module, __testing, test, messages
   }
   
   global{
+    messages = function (to, from, pagination){
+      twilio:messages(to, form, pagination)
+      
+      
+    }
+    
     __testing = { "queries": [ { "name": "__testing" },
                                { "name": "hello", "args": [ "obj" ] } ],
                   "events": [ { "domain": "test", "type": "twilio",
@@ -29,6 +35,7 @@ ruleset using_twilio_module{
     }
     twilio:send(to, from, message);
   }
+  
 
   
 }
