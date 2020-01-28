@@ -12,7 +12,7 @@ ruleset twilio_module{
     logging on
     use module keys_Twilio alias access
     shares hello, __testing, monkey, send_sms, messages, send
-    provides send
+    provides send, messages
   }
 
   global {
@@ -42,6 +42,11 @@ ruleset twilio_module{
                 
       // If pagination is a number then do the after => () which is to take the content and decode it and then take the messages and decode it
       // content = (pagination.isnull() == false) => (content{"content"}.decode()){"messages"}.decode() | pagination.klog("somethiasdfadfasdf");
+
+      content = content{"messages"}.decode();
+      // content = "messages";
+      
+      content = pagination.isnull() => content | content.slice(0, pagination);
 
       content
       
