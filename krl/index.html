@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Timing</title>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="timing.js"></script>
+  <style type="text/css">
+    span.finished {
+      cursor: pointer;
+      color: blue;
+      text-decoration: underline;
+    }
+  * {
+    box-sizing: border-box;
+  }
+  
+  /* Create two equal columns that floats next to each other */
+  .column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+    height: 150px; /* Should be removed. Only for demonstration */
+  }
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  </style>
+</head>
+
+<body style="padding:20px">
+  <div class="row">
+    <div class="column">
+      <h1>Obtain Information</h1>
+      <button type="button" onclick="currentTemperature()">Show Current Temperature</button>
+      <button type="button" onclick="loadTemperatures()">Get Temperatures</button>
+      <button type="button" onclick="loadViolations()">Get Violations</button>
+    </div>
+    <div class="column">
+      <h1>Update Information</h1>
+      <form name="myForm" onsubmit="return updateProfile()">
+        <input name="name" value="Name">
+        <input name="location" value="Pico Labs">
+        <input name="threshold" value="90.00">
+        <input name="toNotify" value="10">
+        <input type="submit" value="Submit">
+      </form>
+      <button type="button" onclick="getInformation()">Check Information</button>
+    </div>
+
+    <script>
+    </script>
+    <!-- the result of the search will be rendered inside this div -->
+  </div>
+
+  <div class="row">
+
+  <div class="column" id="temperatures"></div>
+
+  <div class="column" id="info"></div>
+
+
+  </div>
+
+
+  <script>
+  </script>
+
+</body>
+
+</html>
