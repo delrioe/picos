@@ -1,0 +1,7 @@
+HOST="localhost"
+PORT="8080"
+ECI="KakK2acxTsMA3NwecLSKw7"
+EID=0001
+RID="manage_sensors"
+DOMAIN="sensor"
+TYPE="new_sensor"
