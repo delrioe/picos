@@ -16,7 +16,7 @@ ruleset sensorManagerProfile{
         }
 
         // send = defaction (to, from, message
-        sendSMS = function(message){
+        sendSMS = defaction(message){
             twilio:send(to_number, from_number, message)
         }
 
