@@ -77,17 +77,20 @@ ruleset wovyn_base {
   
   rule violation{
     select when wovyn threshold_violation //where event:attr("highTemp") > temperature_threshold
-    
+    foreach subscription:established("Tx_role", "Manager").map(function(x){ x{"Tx"}}) setting (sub)
     pre{
       temp = event:attr("temp")
       time = event:attr("timestamp")
-      managerECI = subscription:established("Tx_role", "Manager").head(){"Tx"}.klog("this is the Event ECI: ")
+      // managerECI = (subscription:established("Tx_role", "Manager").map(function(x){ x{"Tx"}}))   //.head(){"Tx"}.klog("this is the Event ECI: ")
+      
     }
     
+    
+    // map(function(x){ x{“Tx”}})
     //If this line below is enable, messages will be sent to my phone number. .... 
     //---------->twilio:send( ent:numForNotifications, 14143765911, "There was a violation on the temp: " + temp);
     // send_directive("Violation", {"Temp Violation" : "There was a violation on the temp: " + temp + "at " + time})  
-    event:send({"eci":managerECI, "domain":"notification", "type":"threshold_violation",
+    event:send({"eci":sub, "domain":"notification", "type":"threshold_violation",
     "attrs":{
       "sensor": wrangler:name(),
       "temp" : temp
@@ -132,7 +135,12 @@ ruleset wovyn_base {
   
   
   
-  
+ rule autoAcceptSubscriptions {
+  select when wrangler inbound_pending_subscription_added
+  always {
+    raise wrangler event "pending_subscription_approval" attributes event:attrs; 
+  }
+}
   
   
   
