@@ -34,7 +34,7 @@ ruleset manage_sensors{
       result = sensors().map(function(x){
           {
             "name": wrangler:skyQuery(x{"Tx"}, "io.picolabs.wrangler", "name", "" ),
-            "temperatures" : wrangler:skyQuery(x{"Tx"}, "temperature_store", "temperatures", "");
+            "temperatures" : wrangler:skyQuery(x{"Tx"}, "temperature_store", "temperatures", "")
           }
       });
       result
@@ -60,7 +60,8 @@ ruleset manage_sensors{
                   "events":  [ { "domain": "sensor", "type": "new_sensor", "attrs": [ "sensor_id" ] },
                                 {"domain": "collection", "type": "empty"},
                                 {"domain": "sensor", "type" : "unneeded_sensor", "attrs": ["sensor_id"]},
-                                {"domain": "create", "type": "subscription_children"}
+                                {"domain": "create", "type": "subscription_children"},
+                                {"domain":"wrangler", "type":"sendSubscription", "attrs":["eci"]}
                             ] 
       
     }
@@ -220,6 +221,24 @@ ruleset manage_sensors{
  } 
   
 
+  rule sendSubscriptions{
+    select when wrangler sendSubscription
+    pre{
+      eci = event:attr("eci")
+      host = event:attr("Tx_host").defaultsTo(null)
+      rx_role = event:attr("Rx_role").defaultsTo("Other")
+      tx_role = event:attr("Tx_role").defaultsTo("Other")
+    }
+    
+    always{
+      raise wrangler event "subscription" attributes{
+        "name":"Sensor",
+        "wellKnown_Tx":eci,
+        "Tx_role":tx_role,
+        "Rx_role":rx_role
+      }
+    }
+  }
 
 
   //accepts any subscriptions that have a role and sets it up tp 
