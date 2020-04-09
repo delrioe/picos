@@ -1,0 +1,26 @@
+
+Levi Del Rio                        Lab 9
+
+
+
+
+
+
+1. One of the advantages is that it is easy to know the order of messages received because it is in chronological order. I am guessing you could replace it with a timestamp but it will be harder to know which one came first unless careful examination is done. 
+
+2. Yes and no. If you are asking if they are in order in the array then no. IF the question is if they are in order chronological then I guess it is because of the sequence number. To order the messages in the array we sort it by the MessageID when requeted a list or we can order it as one message gets  added.
+
+3. I made sure that only when receiving the seen event a rummor would be sent to the sender for every messages missing on the sender. If there are no messages that the sender needed then no rumors were sent. If both picos had the same seen message, then nothing gets done. 
+The ID was helpful to know which message has been received and which one has not.
+
+4. Low number of n means more messages propagated between picos. This means faster update on each pico. If the n is large, then it might take a while for the pico to receive updates from other picos. For debuging, low n is a nightmare. 
+
+5. Yes they all got the messages. No they were not in the same order in the array. Some messages came first before others. Reason for that is that it all depends on who sends the message first. 
+
+6. Because if the node holds data that other nodes connected to it are missing, removing that node will make it so that the data will be unreachable. 
+
+7. I could make in a way in which if one of the nodes fails, lets say, it broke and has not pinged anything back in a certain time, then the other picos can send a notification to the picos related to them. The other picos can spread the error to other picos. 
+
+Another way to do it is by sending a message to one pico and wait until the message gets propagated between all of them. Having each pico respond to that message on received will allow us to know which picos received a message and confirmed they received it and which one did not. 
+
+
